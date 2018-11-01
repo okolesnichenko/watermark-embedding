@@ -36,12 +36,10 @@
             this.comboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.labelbefore = new System.Windows.Forms.Label();
-            this.labelafter = new System.Windows.Forms.Label();
-            this.labelwmA = new System.Windows.Forms.Label();
-            this.labelwmB = new System.Windows.Forms.Label();
             this.kutterbutton = new System.Windows.Forms.Button();
             this.labelurl = new System.Windows.Forms.Label();
+            this.labelMistakes = new System.Windows.Forms.Label();
+            this.labelAccuracy = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // openFileDialog
@@ -51,7 +49,7 @@
             // buutonforload
             // 
             this.buutonforload.Enabled = false;
-            this.buutonforload.Location = new System.Drawing.Point(248, 199);
+            this.buutonforload.Location = new System.Drawing.Point(462, 68);
             this.buutonforload.Name = "buutonforload";
             this.buutonforload.Size = new System.Drawing.Size(191, 38);
             this.buutonforload.TabIndex = 0;
@@ -103,44 +101,10 @@
             this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.toolTip1.ToolTipTitle = "Подсказка";
             // 
-            // labelbefore
-            // 
-            this.labelbefore.AutoSize = true;
-            this.labelbefore.Location = new System.Drawing.Point(45, 349);
-            this.labelbefore.Name = "labelbefore";
-            this.labelbefore.Size = new System.Drawing.Size(93, 13);
-            this.labelbefore.TabIndex = 6;
-            this.labelbefore.Text = "До встраивания:";
-            // 
-            // labelafter
-            // 
-            this.labelafter.AutoSize = true;
-            this.labelafter.Location = new System.Drawing.Point(45, 399);
-            this.labelafter.Name = "labelafter";
-            this.labelafter.Size = new System.Drawing.Size(110, 13);
-            this.labelafter.TabIndex = 7;
-            this.labelafter.Text = "После встраивания:";
-            // 
-            // labelwmA
-            // 
-            this.labelwmA.AutoSize = true;
-            this.labelwmA.Location = new System.Drawing.Point(169, 349);
-            this.labelwmA.Name = "labelwmA";
-            this.labelwmA.Size = new System.Drawing.Size(0, 13);
-            this.labelwmA.TabIndex = 8;
-            // 
-            // labelwmB
-            // 
-            this.labelwmB.AutoSize = true;
-            this.labelwmB.Location = new System.Drawing.Point(169, 399);
-            this.labelwmB.Name = "labelwmB";
-            this.labelwmB.Size = new System.Drawing.Size(0, 13);
-            this.labelwmB.TabIndex = 9;
-            // 
             // kutterbutton
             // 
             this.kutterbutton.Enabled = false;
-            this.kutterbutton.Location = new System.Drawing.Point(248, 290);
+            this.kutterbutton.Location = new System.Drawing.Point(462, 137);
             this.kutterbutton.Name = "kutterbutton";
             this.kutterbutton.Size = new System.Drawing.Size(191, 38);
             this.kutterbutton.TabIndex = 10;
@@ -151,23 +115,39 @@
             // labelurl
             // 
             this.labelurl.AutoSize = true;
-            this.labelurl.Location = new System.Drawing.Point(248, 255);
+            this.labelurl.Location = new System.Drawing.Point(245, 209);
             this.labelurl.Name = "labelurl";
             this.labelurl.Size = new System.Drawing.Size(0, 13);
             this.labelurl.TabIndex = 11;
+            // 
+            // labelMistakes
+            // 
+            this.labelMistakes.AutoSize = true;
+            this.labelMistakes.Location = new System.Drawing.Point(45, 362);
+            this.labelMistakes.Name = "labelMistakes";
+            this.labelMistakes.Size = new System.Drawing.Size(57, 13);
+            this.labelMistakes.TabIndex = 12;
+            this.labelMistakes.Text = "Точность:";
+            // 
+            // labelAccuracy
+            // 
+            this.labelAccuracy.AutoSize = true;
+            this.labelAccuracy.Location = new System.Drawing.Point(135, 362);
+            this.labelAccuracy.Name = "labelAccuracy";
+            this.labelAccuracy.Size = new System.Drawing.Size(0, 13);
+            this.labelAccuracy.TabIndex = 13;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(508, 461);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(707, 442);
+            this.Controls.Add(this.labelAccuracy);
+            this.Controls.Add(this.labelMistakes);
             this.Controls.Add(this.labelurl);
             this.Controls.Add(this.kutterbutton);
-            this.Controls.Add(this.labelwmB);
-            this.Controls.Add(this.labelwmA);
-            this.Controls.Add(this.labelafter);
-            this.Controls.Add(this.labelbefore);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox);
             this.Controls.Add(this.textBox1);
@@ -189,12 +169,10 @@
         private System.Windows.Forms.ComboBox comboBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Label labelbefore;
-        private System.Windows.Forms.Label labelafter;
-        private System.Windows.Forms.Label labelwmA;
-        private System.Windows.Forms.Label labelwmB;
         private System.Windows.Forms.Button kutterbutton;
         private System.Windows.Forms.Label labelurl;
+        private System.Windows.Forms.Label labelMistakes;
+        private System.Windows.Forms.Label labelAccuracy;
     }
 }
 

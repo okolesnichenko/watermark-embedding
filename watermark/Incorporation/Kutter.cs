@@ -13,14 +13,17 @@ namespace watermark.Incorporation
         static public Bitmap KutterEmbedding(Bitmap bmp, float[] pseudo, string wbyte)
         {
             int r, g, b;
+            int h, w;
             double l = 0.1;
             Color color = new Color();
             for (int i = 0; i < pseudo.Length; i++)
             {
-                r = bmp.GetPixel((int)(pseudo[i] / bmp.Height), (int)(pseudo[i] / bmp.Width)).R;
-                g = bmp.GetPixel((int)(pseudo[i] / bmp.Height), (int)(pseudo[i] / bmp.Width)).G;
-                b = bmp.GetPixel((int)(pseudo[i] / bmp.Height), (int)(pseudo[i] / bmp.Width)).B;
-                double Y = 0.3 * r + 0.59 * g + 0.11 * b;
+                h = (int)(pseudo[i] / bmp.Height);
+                w = (int)(pseudo[i] / bmp.Width);
+                r = bmp.GetPixel(h, w).R;
+                g = bmp.GetPixel(h, w).G;
+                b = bmp.GetPixel(h, w).B;
+                double Y = Incorporation.Context.Brightness(h, w, bmp);
                 if (wbyte[i] == '0')
                 {
                     b -= (int)(l * Y);

@@ -15,8 +15,6 @@ namespace watermark
         public PictureForm(Bitmap bmpafter, Bitmap bmpbefore, string url, string wmBits)
         {
             InitializeComponent();
-            Incorporation.Generator generator = new Incorporation.Generator(720, 16, 45, 6, wmBits.Length);
-            float[] pseudo = generator.Generate();
             Image image = Image.FromFile(url);
             pictureBoxA.Image = bmpbefore;
             pictureBoxB.Image = bmpafter;

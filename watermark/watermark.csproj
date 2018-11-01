@@ -51,6 +51,8 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Incorporation\Bruyndonckx.cs" />
+    <Compile Include="Incorporation\Context.cs" />
     <Compile Include="Incorporation\Converter.cs" />
     <Compile Include="Incorporation\Generator.cs" />
     <Compile Include="Incorporation\Kutter.cs" />

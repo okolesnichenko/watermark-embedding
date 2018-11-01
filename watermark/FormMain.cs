@@ -60,15 +60,20 @@ namespace watermark
                 default:
                     break;
             }
+            // Генериация псевдорандомной послед-сти   
             Incorporation.Generator generator = new Incorporation.Generator(90, 16, 45, 6, wmBits.Length);
             float[] pseudo = generator.Generate();
+            
+            // Вывод 2 изображений
             Bitmap bmpbefore = new Bitmap(image);
             Bitmap bmpafter = Incorporation.Kutter.KutterEmbedding(bmpbefore, pseudo, wmBits);
             Form secondform = new PictureForm(bmpafter, bmpbefore, url, wmBits);
             secondform.Show();
+
+            // Резульаты
+            Bitmap res = Incorporation.Bruyndonckx.BruyndonckxEmbedding(bmpbefore, wmBits);
             string result = Incorporation.Kutter.KutterExtracting(bmpafter, pseudo);
-            labelwmA.Text = wmBits;
-            labelwmB.Text = result;
+            labelAccuracy.Text = Convert.ToString(Incorporation.Context.Accuracy(wmBits, result));
         }
     }
 }
