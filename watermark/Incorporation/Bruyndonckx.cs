@@ -16,7 +16,7 @@ namespace watermark.Incorporation
         public bool l;    // True = Big, False = Less
         public bool mask;      // True = A, Fasle = Small
 
-        MyPixel(int x, int y, double bright, bool l, bool mask)
+        public MyPixel(int x, int y, double bright, bool l, bool mask)
         {
             this.x = x;
             this.y = y;
@@ -29,58 +29,64 @@ namespace watermark.Incorporation
     {
         static public Bitmap BruyndonckxEmbedding(Bitmap bmp, string wbyte)
         {
-            double[] alpha = new double[64];
+            List<MyPixel> pixels = new List<MyPixel>();
+            double[] bright = new double[64];
             int height = bmp.Height;
             int width = bmp.Width;
             int count = 0;
-            for(int i = 0; i < 1; i+=8)
+            for (int i = 0; i < 1; i += 8)
             {
-                for(int j = 0; j < 1; j+=8)
+                for (int j = 0; j < 1; j += 8)
                 {
-                    for(int y = 0; y < 8; y++)
+                    for (int y = 0; y < 8; y++)
                     {
-                        for(int x = 0; x < 8; x++)
+                        for (int x = 0; x < 8; x++)
                         {
-                            //MyPixel pixel = MyPixel(i+x, j+y, )
-                            alpha[count] = Incorporation.Context.Brightness(i+x, j+y, bmp);
-                            count++;
+                            bright[y*8+x] = Incorporation.Context.Brightness(i + x, j + y, bmp);
+                            pixels.Add(new MyPixel(i + x, j + y, bright[y * 8 + x], false, false));
                         }
                     }
+                    Array.Sort(bright);
+                    double e = DiffAndMax(bright);
+                    int a = 0;
                 }
             }
             return null;
         }
 
-        static public double Func(MyPixel[] Y, int x)
+        static public double Func(double[] Y, double x)
         {
-            int[] X = { 0, 1, 2, 3, 4, 5, 6, 7 };
+            int[] X = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
             double res = 0;
-            double tmp = 0;
-            for(int i = 0; i < 8; i++)
+            double tmp = 1;
+            for (int i = 0; i < X.Length; i++)
             {
-                for(int j = 0; j < 8; j++)
+                for (int j = 0; j < X.Length; j++)
                 {
-                    if(i != j)
+                    if (i != j)
                     {
-                        tmp *= (x - X[j]) / (X[i] - X[j]);
+                        tmp *= ((x - X[j]) / (X[i] - X[j]));
                     }
                 }
-                res += Y[i*8-1].bright * tmp;
+                if (i == 0) i = 1;
+                res += Y[i * 8 - 1] * tmp;
+                if (i == 0) i = 0;
             }
             return res;
         }
 
-        static public double DiffAndMax(MyPixel[] Y, int x)
+        static public double DiffAndMax(double[] Y)
         {
-            int[] X = { 0, 1, 2, 3, 4, 5, 6, 7 };
-            int h = 1;
-            double max = 0;
+            int[] X = {0, 1, 2, 3, 4, 5, 6, 7};
+            double h = 0.5;
+            double max = -Int32.MaxValue;
             int x_max = -1;
             double tmp;
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < X.Length; i++)
             {
+                double cc = Func(Y, X[i] + h);
                 tmp = (Func(Y, X[i] + h) - Func(Y, X[i] - h)) / 2 * h;
-                if(tmp>max)
+                if (tmp > max)
                 {
                     max = tmp;
                     x_max = X[i];
@@ -90,3 +96,4 @@ namespace watermark.Incorporation
         }
     }
 }
+
