@@ -60,7 +60,7 @@ namespace watermark
                 default:
                     break;
             }
-            // Генериация псевдорандомной послед-сти   
+            // Генерация псевдорандомной послед-сти   
             Incorporation.Generator generator = new Incorporation.Generator(90, 16, 45, 6, wmBits.Length);
             float[] pseudo = generator.Generate();
             
