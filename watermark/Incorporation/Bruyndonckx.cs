@@ -50,15 +50,12 @@ namespace watermark.Incorporation
             // Пикселей должно быть много для большого цвз
             for (int k = 0; k < wbyte.Length - 1; k++)
             {
-                if (i < bmp.Height)
+                i += 8;
+                if (i > bmp.Height)
                 {
-                    i += 8;
-                }
-                else
-                {
+                    j += 8;
                     if (j < bmp.Width)
-                    {
-                        j += 8;
+                    {    
                         i = 0;
                     }
                     else
@@ -116,6 +113,48 @@ namespace watermark.Incorporation
                 listOfPixels.Add(pixels);
             }
             return bmp;
+        }
+
+        static public string BruyndonckxExtracting(Bitmap bmp, int length)
+        {
+            List<MyPixel> pixels;
+            double mean1A, mean2A, mean1B, mean2B;
+            int i = 0, j = 0, k, height = bmp.Height, width = bmp.Width;
+            string wbyte = "";
+            for(k = 0; k<length; k++)
+            {
+                i += 8;
+                if (k > bmp.Height)
+                {
+                    j += 8;
+                    if (j < bmp.Width)
+                    {
+                        k = 0;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                pixels = GetPixels(bmp, i, j);
+                mean1A = Context.MeanFor12AB(pixels, false, true);
+                mean2A = Context.MeanFor12AB(pixels, true, true);
+                mean1B = Context.MeanFor12AB(pixels, false, false);
+                mean2B = Context.MeanFor12AB(pixels, true, false);
+                if(((mean1A - mean1B)<0)&&((mean2A - mean2B)<0))
+                {
+                    wbyte += "0";
+                }
+                else if(((mean1A - mean1B) > 0) && ((mean2A - mean2B) > 0))
+                {
+                    wbyte += "1";
+                }
+                else
+                {
+                    wbyte += "e";
+                }
+            }
+            return wbyte;
         }
 
         static public List<MyPixel> GetPixels(Bitmap bmp, int i, int j)

@@ -40,6 +40,9 @@ namespace watermark.Incorporation
             r = bmp.GetPixel(x, y).R + Convert.ToInt32(delta * 0.3);
             g = bmp.GetPixel(x, y).G + Convert.ToInt32(delta * 0.59);
             b = bmp.GetPixel(x, y).B + Convert.ToInt32(delta * 0.11);
+            if (r > 255) r = 255;
+            if (g > 255) g = 255;
+            if (b > 255) b = 255;
             Color color = Color.FromArgb(r, g, b);
             bmp.SetPixel(x, y, color);
             return bmp;
