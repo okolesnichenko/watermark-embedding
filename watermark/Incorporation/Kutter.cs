@@ -23,7 +23,7 @@ namespace watermark.Incorporation
                 r = bmp.GetPixel(h, w).R;
                 g = bmp.GetPixel(h, w).G;
                 b = bmp.GetPixel(h, w).B;
-                double Y = Incorporation.Context.Brightness(h, w, bmp);
+                double Y = Incorporation.Context.GetBrightness(h, w, bmp);
                 if (wbyte[i] == '0')
                 {
                     b -= (int)(l * Y);
