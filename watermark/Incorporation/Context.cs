@@ -25,6 +25,25 @@ namespace watermark.Incorporation
             return 1 - (double)count / a.Length;
         }
 
+        public static double GetBlueColorBright(int x, int y, Bitmap bmp)
+        {
+            return bmp.GetPixel(x, y).B;
+        }
+
+        public static Bitmap SetBlueColorBright(int x, int y, Bitmap bmp, double delta)
+        {
+            int r, g, b;
+            int deltaInt = Convert.ToInt32(delta);
+            r = bmp.GetPixel(x, y).R;
+            g = bmp.GetPixel(x, y).G;
+            b = bmp.GetPixel(x, y).B + deltaInt;
+            if (b > 255) b = 255;
+            if (b < 0) b = 0;
+            Color color = Color.FromArgb(r, g, b);
+            bmp.SetPixel(x, y, color);
+            return bmp;
+        }
+
         public static double GetBrightness(int x, int y, Bitmap bmp)
         {
             int r, g, b;

@@ -40,6 +40,8 @@
             this.labelurl = new System.Windows.Forms.Label();
             this.labelMistakes = new System.Windows.Forms.Label();
             this.labelAccuracy = new System.Windows.Forms.Label();
+            this.comboBoxMethod = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // openFileDialog
@@ -137,6 +139,26 @@
             this.labelAccuracy.Size = new System.Drawing.Size(0, 13);
             this.labelAccuracy.TabIndex = 13;
             // 
+            // comboBoxMethod
+            // 
+            this.comboBoxMethod.FormattingEnabled = true;
+            this.comboBoxMethod.Items.AddRange(new object[] {
+            "Метод Куттера",
+            "Метод Брундокса"});
+            this.comboBoxMethod.Location = new System.Drawing.Point(48, 147);
+            this.comboBoxMethod.Name = "comboBoxMethod";
+            this.comboBoxMethod.Size = new System.Drawing.Size(156, 21);
+            this.comboBoxMethod.TabIndex = 14;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(45, 131);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(159, 13);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "Выберете метод встраивания";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -144,6 +166,8 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(707, 442);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.comboBoxMethod);
             this.Controls.Add(this.labelAccuracy);
             this.Controls.Add(this.labelMistakes);
             this.Controls.Add(this.labelurl);
@@ -173,6 +197,8 @@
         private System.Windows.Forms.Label labelurl;
         private System.Windows.Forms.Label labelMistakes;
         private System.Windows.Forms.Label labelAccuracy;
+        private System.Windows.Forms.ComboBox comboBoxMethod;
+        private System.Windows.Forms.Label label2;
     }
 }
 

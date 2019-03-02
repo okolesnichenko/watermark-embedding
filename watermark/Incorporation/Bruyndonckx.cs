@@ -14,8 +14,8 @@ namespace watermark.Incorporation
         public int x;
         public int y;
         public double bright;
-        public bool Lmark;    // True = Big, False = Less
-        public bool mask;      // True = A, Fasle = Small
+        public bool Lmark;    // True = Big 2, False = Less 1
+        public bool mask;     // True = A, Fasle = B
         /* Схема 1
         A A A A B B B B
         A A A A B B B B
@@ -40,22 +40,28 @@ namespace watermark.Incorporation
     {
         static public Bitmap BruyndonckxEmbedding(Bitmap bmp, string wbyte)
         {
-            List<List<MyPixel>> listOfPixels = new List<List<MyPixel>>();
-            List<MyPixel> pixels;
+            List<MyPixel> pixels = new List<MyPixel>();
+            int blockLength = 8;
+            int level = 2;
+            bool blue = true; // КОСТЫЛЬ ДЛЯ ЯРКОСТИ СИЕНГО ЦВЕТА
             double mean1A, mean2A, mean1B, mean2B, mean1, mean2,
                 _mean1A = 0, _mean2A = 0, _mean1B = 0, _mean2B = 0, delta = 0;
             int count1A, count2A, count1B, count2B, i = 0, j = 0,
-                height = bmp.Height, width = bmp.Width, level = 4;
+                height = bmp.Height, width = bmp.Width;
             // Цикл для каждого символа цвз
             // Пикселей должно быть много для большого цвз
             for (int k = 0; k < wbyte.Length - 1; k++)
             {
+                // Необходимо для правльной передачи аргументов для получения блока пикселей
+                // без первышения ограничений по картинке
+                pixels = GetPixels(bmp, i, j, blue);
+
                 i += 8;
-                if (i > bmp.Height)
+                if (i >= bmp.Height - blockLength)
                 {
                     j += 8;
-                    if (j < bmp.Width)
-                    {    
+                    if (j < bmp.Width - blockLength)
+                    {
                         i = 0;
                     }
                     else
@@ -63,18 +69,19 @@ namespace watermark.Incorporation
                         break;
                     }
                 }
-                pixels = GetPixels(bmp, i, j);
-                count1A = Context.CountFor12AB(pixels, false, true);
-                count2A = Context.CountFor12AB(pixels, true, true);
-                count1B = Context.CountFor12AB(pixels, false, false);
-                count2B = Context.CountFor12AB(pixels, true, false);
+                // True = Big 2, False = Less 1
+                // True = A, Fasle = B
+                count1A = Context.CountFor12AB(pixels, false, true);  // 1A
+                count2A = Context.CountFor12AB(pixels, true, true);   // 2A
+                count1B = Context.CountFor12AB(pixels, false, false); // 1B
+                count2B = Context.CountFor12AB(pixels, true, false);  // 2B
                 mean1A = Context.MeanFor12AB(pixels, false, true);
                 mean2A = Context.MeanFor12AB(pixels, true, true);
                 mean1B = Context.MeanFor12AB(pixels, false, false);
                 mean2B = Context.MeanFor12AB(pixels, true, false);
                 mean1 = Context.MeanFor12(pixels, false);
                 mean2 = Context.MeanFor12(pixels, true);
-                // Расчет средних для каждой из 4 категорий символов
+                // Расчет средних* для каждой из 4 категорий символов
                 if (wbyte[k] == '0')
                 {
                     _mean1A = mean1 - (level * count1B) / (count1A + count1B);
@@ -90,80 +97,131 @@ namespace watermark.Incorporation
                     _mean2B = _mean2A - level;
                 }
                 // Изменение яркости в соответсвии с типом пикселей
-                foreach(MyPixel pixel in pixels)
+                foreach (MyPixel pixel in pixels)
                 {
-                    if ((!pixel.Lmark)&&(pixel.mask))
+                    if ((!pixel.Lmark) && (pixel.mask))        // 1A
                     {
                         delta = _mean1A - mean1A;
                     }
-                    else if((pixel.Lmark) && (pixel.mask))
+                    else if ((pixel.Lmark) && (pixel.mask))   // 2A
                     {
                         delta = _mean2A - mean2A;
                     }
-                    else if((!pixel.Lmark) && (!pixel.mask))
+                    else if ((!pixel.Lmark) && (!pixel.mask)) // 1B
                     {
-                        delta = _mean2A - mean2A;
+                        delta = _mean1B - mean1B;
                     }
                     else
                     {
-                        delta = _mean2B - mean2B;
+                        delta = _mean2B - mean2B;            // 2B
                     }
-                    bmp = Context.SetBrightness(pixel.x, pixel.y, bmp, delta);
+
+                    // Встривание в картинку
+                    if (blue)
+                    {
+                        bmp = Context.SetBlueColorBright(pixel.x, pixel.y, bmp, delta);
+                    }
+                    else
+                    {
+                        bmp = Context.SetBrightness(pixel.x, pixel.y, bmp, delta);
+                    }
                 }
-                listOfPixels.Add(pixels);
             }
             return bmp;
         }
 
         static public string BruyndonckxExtracting(Bitmap bmp, int length)
         {
-            List<MyPixel> pixels;
-            double mean1A, mean2A, mean1B, mean2B;
-            int i = 0, j = 0, k, height = bmp.Height, width = bmp.Width;
+            List<MyPixel> pixels = new List<MyPixel>();
+            bool blue = true;
+            int blockLength = 8;
+            double mean1A, mean2A, mean1B, mean2B, diff1, diff2, diff;
+            int count1A, count2A, count1B, count2B,
+                i = 0, j = 0, k, height = bmp.Height, width = bmp.Width;
             string wbyte = "";
-            for(k = 0; k<length; k++)
+            for (k = 0; k < length; k++)
             {
+                pixels = GetPixels(bmp, i, j, blue);
+
                 i += 8;
-                if (k > bmp.Height)
+                if (i >= bmp.Height - blockLength)
                 {
                     j += 8;
-                    if (j < bmp.Width)
+                    if (j < bmp.Width - blockLength)
                     {
-                        k = 0;
+                        i = 0;
                     }
                     else
                     {
                         break;
                     }
                 }
-                pixels = GetPixels(bmp, i, j);
+
                 mean1A = Context.MeanFor12AB(pixels, false, true);
                 mean2A = Context.MeanFor12AB(pixels, true, true);
                 mean1B = Context.MeanFor12AB(pixels, false, false);
                 mean2B = Context.MeanFor12AB(pixels, true, false);
-                if(((mean1A - mean1B)<0)&&((mean2A - mean2B)<0))
+                count1A = Context.CountFor12AB(pixels, false, true);
+                count2A = Context.CountFor12AB(pixels, true, true);
+                count1B = Context.CountFor12AB(pixels, false, false);
+                count2B = Context.CountFor12AB(pixels, true, false);
+
+                diff1 = mean1A - mean1B;
+                diff2 = mean2A - mean2B;
+
+                // Рассмартиваются 3 кейса
+                if (diff1 * diff2 > 0) //1 diff1*diff2 > 0
                 {
-                    wbyte += "0";
+                    if (diff1 > 0)
+                    {
+                        wbyte += "1";
+                    }
+                    else
+                    {
+                        wbyte += "0";
+                    }
                 }
-                else if(((mean1A - mean1B) > 0) && ((mean2A - mean2B) > 0))
+                else if (diff1 * diff2 < 0) //2 diff1 * diff2 < 0
                 {
-                    wbyte += "1";
+                    diff = (count1A + count1B) * diff1 + (count2A + count2B) * diff2;
+                    if (diff > 0)
+                    {
+                        wbyte += "1";
+                    }
+                    else
+                    {
+                        wbyte += "0";
+                    }
                 }
-                else
+                else //3 diff1 - diff2 = 0
                 {
-                    wbyte += "e";
+                    if (diff1 > diff2)
+                    {
+                        diff = diff1;
+                    }
+                    else
+                    {
+                        diff = diff2;
+                    }
+                    if (diff > 0)
+                    {
+                        wbyte += "1";
+                    }
+                    else
+                    {
+                        wbyte += "0";
+                    }
                 }
+
             }
             return wbyte;
         }
 
-        static public List<MyPixel> GetPixels(Bitmap bmp, int i, int j)
+        static public List<MyPixel> GetPixels(Bitmap bmp, int i, int j, bool blue)
         {
             List<MyPixel> pixels = new List<MyPixel>();
+            List<MyPixel> markedPixels = new List<MyPixel>();
             double[] bright = new double[64];
-            int height = bmp.Height;
-            int width = bmp.Width;
-            // Полная картнка
 
             // Блок пикселей 8 на 8
             for (int y = 0; y < 8; y++)
@@ -172,7 +230,14 @@ namespace watermark.Incorporation
                 {
                     // Проходим по всем пикселям и считаем яркость
                     // Маркируем их по схеме 1
-                    bright[y * 8 + x] = Context.GetBrightness(i + x, j + y, bmp);
+                    if (blue)
+                    {
+                        bright[y * 8 + x] = Context.GetBlueColorBright(i + x, j + y, bmp);
+                    }
+                    else
+                    {
+                        bright[y * 8 + x] = Context.GetBrightness(i + x, j + y, bmp);
+                    }
                     if (((y < 4) && (x < 4)) || ((x >= 4) && (y >= 4)))
                     {
                         pixels.Add(new MyPixel(i + x, j + y, bright[y * 8 + x], false, true));
@@ -183,11 +248,12 @@ namespace watermark.Incorporation
                     }
                 }
             }
+
             Array.Sort(bright);
             int X = DiffAndMax(bright);
-            pixels = MarkPixels(pixels, bright[X]);
+            markedPixels = MarkPixels(pixels, bright[X]);
 
-            return pixels;
+            return markedPixels;
         }
 
         static public int DiffAndMax(double[] Y)
@@ -231,6 +297,7 @@ namespace watermark.Incorporation
                     pixel.Lmark = false;
                 }
             }
+
             return pixels;
         }
 
