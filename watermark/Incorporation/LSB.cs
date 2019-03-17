@@ -12,12 +12,12 @@ namespace watermark.Incorporation
         public static Bitmap EmbeddingLSB(Bitmap bmp, string message)
         {
             char[] charPixel = new char[7];
-            int i = 0, count=0, tmp = 0, delta = 0;
+            int i = 0, j = 0, count=0, tmp = 0, delta = 0;
             int h = bmp.Height - 1;
             int w = bmp.Width - 1;
             for (i = 0; i < h; i++)
             {
-                for (int j = 0; j < w; j++)
+                for (j = 0; j < w; j++)
                 { 
                     if (count < message.Length)
                     {
@@ -39,12 +39,12 @@ namespace watermark.Incorporation
         {
             string message = "";
             char[] charPixel = new char[7];
-            int i = 0, count = 0, tmp = 0;
+            int i = 0, j = 0, count = 0, tmp = 0;
             int h = bmp.Height - 1;
             int w = bmp.Width - 1;
             for (i = 0; i < h; i++)
             {
-                for (int j = 0; j < w; j++)
+                for (j = 0; j < w; j++)
                 {
                     if (count < lenght)
                     {
