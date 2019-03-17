@@ -145,7 +145,8 @@
             this.comboBoxMethod.Items.AddRange(new object[] {
             "Метод Куттера",
             "Метод Брундокса",
-            "Метод LSB"});
+            "Метод LSB",
+            "Метод PM1"});
             this.comboBoxMethod.Location = new System.Drawing.Point(48, 147);
             this.comboBoxMethod.Name = "comboBoxMethod";
             this.comboBoxMethod.Size = new System.Drawing.Size(156, 21);

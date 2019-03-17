@@ -63,6 +63,7 @@ namespace watermark
             // Генерация псевдорандомной послед-сти   
             Incorporation.Generator generator = new Incorporation.Generator(90, 16, 45, 6, wmBits.Length);
             float[] pseudo = generator.Generate();
+            int[] bitpseudo = generator.GenerateBit();
             Bitmap bmpbefore = new Bitmap(image);
             Bitmap bmpafter;
             string result;
@@ -79,6 +80,10 @@ namespace watermark
                 case 2:
                     bmpafter = Incorporation.LSB.EmbeddingLSB(bmpbefore, wmBits);
                     result = Incorporation.LSB.ExtractLSB(bmpafter, wmBits.Length);
+                    break;
+                case 3:
+                    bmpafter = Incorporation.PM1.EmbeddingPm1(bmpbefore, wmBits, bitpseudo);
+                    result = Incorporation.PM1.ExtractingPm1(bmpbefore, wmBits.Length);
                     break;
                 default:
                     bmpafter = Incorporation.Kutter.EmbeddingKutter(bmpbefore, pseudo, wmBits);

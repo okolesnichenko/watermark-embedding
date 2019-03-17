@@ -25,7 +25,7 @@ namespace watermark.Incorporation
                         charPixel = Convert.ToString(tmp, 2).PadLeft(8, '0').ToCharArray();
                         charPixel[7] = message[count++];
                         delta = tmp - Convert.ToInt32(new string(charPixel),2);
-                        Context.SetBlueColorBright(j, i, bmp, delta);
+                        bmp = Context.SetBlueColorBright(j, i, bmp, delta);
                     }
                     else
                     {
@@ -58,7 +58,6 @@ namespace watermark.Incorporation
                     }
                 }
             }
-
             return message;
         }
 
