@@ -12,7 +12,7 @@ namespace watermark.Incorporation
     {
         public static Bitmap EmbeddingPm1(Bitmap bmp, string message, int[] r)
         {
-            int i = 0, count = 0, tmp = 0, delta = 0, j = 0;
+            int i = 0, count = 0, tmp = 0, delta = 0, j = 0, number = 0;
             int h = bmp.Height - 1;
             int w = bmp.Width - 1;
             for (i = 0; i < h; i++)
@@ -22,17 +22,18 @@ namespace watermark.Incorporation
                     if (count < message.Length)
                     {
                         tmp = Convert.ToInt32(Context.GetBlueColorBright(j, i, bmp));
-                        if (tmp % 2 == message[count])
+                        number = message[count] - '0';
+                        if (tmp % 2 == number)
                         {
                             delta = 0;
                             // Нет изменений
                         }
-                        else if ((tmp % 2 != message[count]) && ((r[count] >= 0) && ((tmp < 255) || (tmp == 0))))
+                        else if ((tmp % 2 != number) && ((r[count] >= 0) && (tmp < 255) || (tmp == 0)))
                         {
                             delta = 1;
                             bmp = Context.SetBlueColorBright(j, i, bmp, delta);
                         }
-                        else if ((tmp % 2 != message[count]) && ((r[count] < 0) && ((tmp == 255) || (tmp > 0))))
+                        else if ((tmp % 2 != number) && ((r[count] < 0) && (tmp > 0) || (tmp ==255)))
                         {
                             delta = -1;
                             bmp = Context.SetBlueColorBright(j, i, bmp, delta);
