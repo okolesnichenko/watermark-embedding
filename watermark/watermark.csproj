@@ -56,6 +56,7 @@
     <Compile Include="Incorporation\Converter.cs" />
     <Compile Include="Incorporation\Generator.cs" />
     <Compile Include="Incorporation\Kutter.cs" />
+    <Compile Include="Incorporation\LSB.cs" />
     <Compile Include="PictureForm.cs">
       <SubType>Form</SubType>
     </Compile>

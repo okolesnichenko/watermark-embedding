@@ -69,16 +69,20 @@ namespace watermark
             switch (comboBoxMethod.SelectedIndex)
             {
                 case 0:
-                    bmpafter = Incorporation.Kutter.KutterEmbedding(bmpbefore, pseudo, wmBits);
-                    result = Incorporation.Kutter.KutterExtracting(bmpafter, pseudo);
+                    bmpafter = Incorporation.Kutter.EmbeddingKutter(bmpbefore, pseudo, wmBits);
+                    result = Incorporation.Kutter.ExtractingKutter(bmpafter, pseudo);
                     break;
                 case 1:
-                    bmpafter = Incorporation.Bruyndonckx.BruyndonckxEmbedding(bmpbefore, wmBits);
-                    result = Incorporation.Bruyndonckx.BruyndonckxExtracting(bmpafter, wmBits.Length);
+                    bmpafter = Incorporation.Bruyndonckx.EmbeddingBruyndonckx(bmpbefore, wmBits);
+                    result = Incorporation.Bruyndonckx.ExtractingBruyndonckx(bmpafter, wmBits.Length);
+                    break;
+                case 2:
+                    bmpafter = Incorporation.LSB.EmbeddingLSB(bmpbefore, wmBits);
+                    result = Incorporation.LSB.ExtractLSB(bmpafter, wmBits.Length);
                     break;
                 default:
-                    bmpafter = Incorporation.Kutter.KutterEmbedding(bmpbefore, pseudo, wmBits);
-                    result = Incorporation.Kutter.KutterExtracting(bmpafter, pseudo);
+                    bmpafter = Incorporation.Kutter.EmbeddingKutter(bmpbefore, pseudo, wmBits);
+                    result = Incorporation.Kutter.ExtractingKutter(bmpafter, pseudo);
                     break;
 
             }

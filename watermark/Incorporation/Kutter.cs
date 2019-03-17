@@ -10,7 +10,7 @@ namespace watermark.Incorporation
 {
     class Kutter
     {
-        static public Bitmap KutterEmbedding(Bitmap bmp, float[] pseudo, string wbyte)
+        static public Bitmap EmbeddingKutter(Bitmap bmp, float[] pseudo, string wbyte)
         {
             int r, g, b;
             int h, w;
@@ -35,12 +35,11 @@ namespace watermark.Incorporation
                         b = 255;
                 }
                 color = Color.FromArgb(r, g, b);
-                bmp.SetPixel((int)(pseudo[i] / bmp.Height), (int)(pseudo[i] / bmp.Width), color);//KOORDINATI
-                string p = KutterExtracting(bmp, pseudo);
+                bmp.SetPixel((int)(pseudo[i] / bmp.Height), (int)(pseudo[i] / bmp.Width), color);
             }
             return bmp;
         }
-        static public string KutterExtracting(Bitmap bmp, float[] pseudo)
+        static public string ExtractingKutter(Bitmap bmp, float[] pseudo)
         {
             string wbyte = "";
             int b = 0, bn = 0, n = 2, tmp = 0;

@@ -38,7 +38,7 @@ namespace watermark.Incorporation
 
     class Bruyndonckx
     {
-        static public Bitmap BruyndonckxEmbedding(Bitmap bmp, string wbyte)
+        static public Bitmap EmbeddingBruyndonckx(Bitmap bmp, string wbyte)
         {
             List<MyPixel> pixels = new List<MyPixel>();
             int blockLength = 8;
@@ -130,7 +130,7 @@ namespace watermark.Incorporation
             return bmp;
         }
 
-        static public string BruyndonckxExtracting(Bitmap bmp, int length)
+        static public string ExtractingBruyndonckx(Bitmap bmp, int length)
         {
             List<MyPixel> pixels = new List<MyPixel>();
             bool blue = true;
