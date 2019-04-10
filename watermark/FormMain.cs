@@ -67,26 +67,47 @@ namespace watermark
             Bitmap bmpbefore = new Bitmap(image);
             Bitmap bmpafter;
             string result;
+            bool check = checkBoxVoid.Checked;
             switch (comboBoxMethod.SelectedIndex)
             {
                 case 0:
                     bmpafter = Incorporation.Kutter.EmbeddingKutter(bmpbefore, pseudo, wmBits);
+                    if (check == true)
+                    {
+                        bmpafter = Interference.Inter.GenerateVoid(bmpafter);
+                    }
                     result = Incorporation.Kutter.ExtractingKutter(bmpafter, pseudo);
                     break;
                 case 1:
                     bmpafter = Incorporation.Bruyndonckx.EmbeddingBruyndonckx(bmpbefore, wmBits);
+                    if (check == true)
+                    {
+                        bmpafter = Interference.Inter.GenerateVoid(bmpafter);
+                    }
                     result = Incorporation.Bruyndonckx.ExtractingBruyndonckx(bmpafter, wmBits.Length);
                     break;
                 case 2:
-                    bmpafter = Incorporation.LSB.EmbeddingLSB(bmpbefore, wmBits);
-                    result = Incorporation.LSB.ExtractLSB(bmpafter, wmBits.Length);
+                    bmpafter = Incorporation.LSB.EmbeddingLSB(bmpbefore, pseudo, wmBits);
+                    if (check == true)
+                    {
+                        bmpafter = Interference.Inter.GenerateVoid(bmpafter);
+                    }
+                    result = Incorporation.LSB.ExtractLSB(bmpafter, pseudo, wmBits.Length);
                     break;
                 case 3:
-                    bmpafter = Incorporation.PM1.EmbeddingPm1(bmpbefore, wmBits, bitpseudo);
-                    result = Incorporation.PM1.ExtractingPm1(bmpbefore, wmBits.Length);
+                    bmpafter = Incorporation.PM1.EmbeddingPm1(bmpbefore, pseudo, wmBits, bitpseudo);
+                    if (check == true)
+                    {
+                        bmpafter = Interference.Inter.GenerateVoid(bmpafter);
+                    }
+                    result = Incorporation.PM1.ExtractingPm1(bmpbefore,pseudo, wmBits.Length);
                     break;
                 default:
                     bmpafter = Incorporation.Kutter.EmbeddingKutter(bmpbefore, pseudo, wmBits);
+                    if (check == true)
+                    {
+                        bmpafter = Interference.Inter.GenerateVoid(bmpafter);
+                    }
                     result = Incorporation.Kutter.ExtractingKutter(bmpafter, pseudo);
                     break;
 

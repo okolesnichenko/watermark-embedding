@@ -58,6 +58,7 @@
     <Compile Include="Incorporation\Kutter.cs" />
     <Compile Include="Incorporation\LSB.cs" />
     <Compile Include="Incorporation\PM1.cs" />
+    <Compile Include="Interference\Inter.cs" />
     <Compile Include="PictureForm.cs">
       <SubType>Form</SubType>
     </Compile>

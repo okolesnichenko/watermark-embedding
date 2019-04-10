@@ -42,6 +42,7 @@
             this.labelAccuracy = new System.Windows.Forms.Label();
             this.comboBoxMethod = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.checkBoxVoid = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // openFileDialog
@@ -161,6 +162,16 @@
             this.label2.TabIndex = 15;
             this.label2.Text = "Выберете метод встраивания";
             // 
+            // checkBoxVoid
+            // 
+            this.checkBoxVoid.AutoSize = true;
+            this.checkBoxVoid.Location = new System.Drawing.Point(48, 204);
+            this.checkBoxVoid.Name = "checkBoxVoid";
+            this.checkBoxVoid.Size = new System.Drawing.Size(116, 17);
+            this.checkBoxVoid.TabIndex = 16;
+            this.checkBoxVoid.Text = "Добавить помехи";
+            this.checkBoxVoid.UseVisualStyleBackColor = true;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -168,6 +179,7 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(707, 442);
+            this.Controls.Add(this.checkBoxVoid);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBoxMethod);
             this.Controls.Add(this.labelAccuracy);
@@ -201,6 +213,7 @@
         private System.Windows.Forms.Label labelAccuracy;
         private System.Windows.Forms.ComboBox comboBoxMethod;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox checkBoxVoid;
     }
 }
 
