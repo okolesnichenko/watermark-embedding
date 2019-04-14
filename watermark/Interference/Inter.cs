@@ -11,7 +11,7 @@ namespace watermark.Interference
     {
         public static Bitmap GenerateVoid(Bitmap bmp)
         {
-            int void_h = 20;
+            int void_h = 21;
             int length = 20, h, w, r, g, b;
             Incorporation.Generator generator = new Incorporation.Generator(90, 16, 45, 6, length);
             float[] gen = generator.Generate();
@@ -50,11 +50,7 @@ namespace watermark.Interference
             }
             else
             {
-                while (tmp > width)
-                {
-                    tmp = tmp / 2;
-                }
-                return (int)tmp;
+                return (int)(tmp/width);
             }
         }
     }

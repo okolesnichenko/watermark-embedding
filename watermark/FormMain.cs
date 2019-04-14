@@ -65,6 +65,7 @@ namespace watermark
             float[] pseudo = generator.Generate();
             int[] bitpseudo = generator.GenerateBit();
             Bitmap bmpbefore = new Bitmap(image);
+            Bitmap startimage = new Bitmap(image);
             Bitmap bmpafter;
             string result;
             bool check = checkBoxVoid.Checked;
@@ -113,7 +114,7 @@ namespace watermark
 
             }
             // Вывод 2 изображений
-            Form secondform = new PictureForm(bmpafter, bmpbefore, url, wmBits);
+            Form secondform = new PictureForm(bmpafter, startimage, url, wmBits);
             labelAccuracy.Text = Convert.ToString(Incorporation.Context.Accuracy(wmBits, result));
             secondform.Show();
         }
